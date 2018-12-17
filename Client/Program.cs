@@ -3,9 +3,8 @@ using System.IO;
 using System.Linq;
 using Microsoft.Extensions.FileSystemGlobbing;
 using Microsoft.Extensions.FileSystemGlobbing.Abstractions;
-using Microsoft.VisualBasic.CompilerServices;
 
-namespace Client
+namespace Copier.Client
 {
     class Program
     {
