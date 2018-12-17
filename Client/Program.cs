@@ -13,12 +13,11 @@ namespace Client
         {
             if (args.Length == 0)
             {
-                Console.WriteLine("Copier is used felan filan");
+                Console.WriteLine("Client.dll <BasePath> <File in GlobPattern> <Destination>");
             }
             else
             {
                 var m = new Matcher();
-
                 m.AddInclude(args[1]);
                 var directoryInfo = new DirectoryInfo(args[0]);
                 var dirInfo = new DirectoryInfoWrapper(directoryInfo);
