@@ -5,6 +5,14 @@
         <TargetFramework>netcoreapp2.1</TargetFramework>
         <AssemblyName>Copier</AssemblyName>
         <RootNamespace>Copier.Client</RootNamespace>
+        <LangVersion>latest</LangVersion>
+    </PropertyGroup>
+    
+    <PropertyGroup>
+        <Authors>Tarik Guney</Authors>
+        <Version>1.0.0</Version>
+        <RepositoryType>git</RepositoryType>
+        <repositoryUrl>https://github.com/tarikguney/copier</repositoryUrl>
     </PropertyGroup>
 
     <ItemGroup>
