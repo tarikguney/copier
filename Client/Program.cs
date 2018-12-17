@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using CommandLine;
 using Microsoft.Extensions.FileSystemGlobbing;
 using Microsoft.Extensions.FileSystemGlobbing.Abstractions;
 
@@ -10,20 +12,33 @@ namespace Copier.Client
     {
         static void Main(string[] args)
         {
-            if (args.Length == 0)
-            {
-                Console.WriteLine("Client.dll <BasePath> <File in GlobPattern> <Destination>");
-            }
-            else
-            {
-                var m = new Matcher();
-                m.AddInclude(args[1]);
-                var directoryInfo = new DirectoryInfo(args[0]);
-                var dirInfo = new DirectoryInfoWrapper(directoryInfo);
+            Parser.Default.ParseArguments<CommandOptions>(args)
+                .WithParsed(StartWatching)
+                .WithNotParsed(a =>
+                {
+                    Environment.Exit(1);
+                });
+        }
 
-                var files = m.Execute(dirInfo).Files;
-                Console.WriteLine(files.Select(a => a.Path).Aggregate((a, b) => a + ", " + b));
-            }
+        private static void StartWatching(CommandOptions options)
+        {
+            var files = GetMatchingFiles(options);
+            
+            Console.WriteLine(files.Select(a => a.Path).Aggregate((a, b) => a + ", " + b));
+        }
+
+        private static IEnumerable<FilePatternMatch> GetMatchingFiles(CommandOptions options)
+        {
+            var m = new Matcher();
+            m.AddInclude(options.SearchPattern);
+
+            var directoryInfo = new DirectoryInfo(string.IsNullOrWhiteSpace(options.BasePath)
+                ? Directory.GetCurrentDirectory()
+                : options.BasePath);
+            var dirInfo = new DirectoryInfoWrapper(directoryInfo);
+
+            var files = m.Execute(dirInfo).Files;
+            return files;
         }
     }
 }
