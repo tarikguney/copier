@@ -10,7 +10,7 @@ namespace Copier.Client
         [Option('f',"filePattern", Required = true, HelpText = "Files to be searched. Accepts glob patter for pattern matching.")]
         public string SearchPattern { get; set; }
         
-        [Option('d', "destinationPath",Required = true,HelpText = "Destination directory path")]
+        [Option('d', "destinationPath",Required = true, HelpText = "Destination directory path")]
         public string DestionationPath { get; set; }
        
     }
