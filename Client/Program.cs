@@ -29,11 +29,11 @@ namespace Copier.Client
         private static IEnumerable<FilePatternMatch> GetMatchingFiles(CommandOptions options)
         {
             var m = new Matcher();
-            m.AddInclude(options.SearchPattern);
+            m.AddInclude(options.FileGlobPattern);
 
-            var directoryInfo = new DirectoryInfo(string.IsNullOrWhiteSpace(options.BasePath)
+            var directoryInfo = new DirectoryInfo(string.IsNullOrWhiteSpace(options.SourceDirectoryPath)
                 ? Directory.GetCurrentDirectory()
-                : options.BasePath);
+                : options.SourceDirectoryPath);
             var dirInfo = new DirectoryInfoWrapper(directoryInfo);
 
             var files = m.Execute(dirInfo).Files;
