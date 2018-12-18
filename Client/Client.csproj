@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
@@ -17,7 +17,6 @@
 
     <ItemGroup>
       <PackageReference Include="CommandLineParser" Version="2.3.0" />
-      <PackageReference Include="Microsoft.Extensions.FileSystemGlobbing" Version="2.2.0" />
     </ItemGroup>
 
 </Project>
