@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using CommandLine;
-using Microsoft.Extensions.FileSystemGlobbing;
-using Microsoft.Extensions.FileSystemGlobbing.Abstractions;
 
 namespace Copier.Client
 {
@@ -18,50 +14,31 @@ namespace Copier.Client
                 {
                     Environment.Exit(1);
                 });
+            
+            Console.WriteLine("Please press any key to exit.");
+            Console.ReadLine();
         }
 
         private static void StartWatching(CommandOptions options)
         {
-            var files = GetMatchingFiles(options).ToList();
-
-            foreach (var file in files)
-            {
-                WatchFile(Path.GetFileName(file.Path), options.SourceDirectoryPath);
-            }
-            
-            Console.WriteLine(files.Select(a => a.Path).Aggregate((a, b) => a + ", " + b));
-            Console.ReadLine();
+            Console.WriteLine("Watching has started...");
+            WatchFile(options.FileGlobPattern, options.SourceDirectoryPath);
         }
 
-        private static void WatchFile(string file, string directoryPath)
+        private static void WatchFile(string filePattern, string sourceDirectoryPath)
         {
             var watcher = new FileSystemWatcher
             {
-                Path = directoryPath,
+                Path = sourceDirectoryPath,
                 NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.FileName,
-                Filter = file,
+                Filter = filePattern,
             };
 
-            watcher.Changed += (sender, args) => Console.WriteLine("File has changed.");
-            watcher.Renamed += (sender, args) => Console.WriteLine("File has been renamed.");
+            watcher.Changed += (sender, args) => Console.WriteLine($"{args.Name} file has changed.");
+            watcher.Renamed += (sender, args) => Console.WriteLine($"{args.OldName} has been renamed to {args.Name}.");
 
             // Start watching the file.
             watcher.EnableRaisingEvents = true;
-        }
-       
-
-        private static IEnumerable<FilePatternMatch> GetMatchingFiles(CommandOptions options)
-        {
-            var m = new Matcher();
-            m.AddInclude(options.FileGlobPattern);
-
-            var directoryInfo = new DirectoryInfo(string.IsNullOrWhiteSpace(options.SourceDirectoryPath)
-                ? Directory.GetCurrentDirectory()
-                : options.SourceDirectoryPath);
-            var dirInfo = new DirectoryInfoWrapper(directoryInfo);
-
-            var files = m.Execute(dirInfo).Files;
-            return files;
         }
     }
 }
