@@ -34,7 +34,14 @@ namespace Copier.Client
                 Filter = filePattern,
             };
 
-            watcher.Changed += (sender, args) => Console.WriteLine($"{args.Name} file has changed.");
+            watcher.Changed += (sender, args) =>
+            {
+                if (args.ChangeType == WatcherChangeTypes.Changed)
+                {
+                    Console.WriteLine($"{args.Name} file has changed.");
+                }
+            };
+            
             watcher.Renamed += (sender, args) => Console.WriteLine($"{args.OldName} has been renamed to {args.Name}.");
 
             // Start watching the file.
