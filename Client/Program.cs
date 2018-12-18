@@ -23,7 +23,6 @@ namespace Copier.Client
         private static void StartWatching(CommandOptions options)
         {
             var files = GetMatchingFiles(options);
-            
             Console.WriteLine(files.Select(a => a.Path).Aggregate((a, b) => a + ", " + b));
         }
 
