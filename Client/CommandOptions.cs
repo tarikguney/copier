@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using CommandLine;
+using CommandLine.Text;
 
 namespace Copier.Client
 {
@@ -11,6 +13,17 @@ namespace Copier.Client
         public string FileGlobPattern { get; set; }
         
         [Option('d', "destinationDirectoryPath",Required = true, HelpText = "Destination directory path")]
-        public string DestionationDirectoryPath { get; set; }
+        public string DestinationDirectoryPath { get; set; }
+        
+        [Usage]
+        public static IEnumerable<Example> Examples => new List<Example>() {
+            new Example("Starts the copier", new UnParserSettings() { PreferShortName = true },
+                new CommandOptions
+            {
+                SourceDirectoryPath = "C:/Users/MyDocuments/Images",
+                FileGlobPattern = "*.jpg",
+                DestinationDirectoryPath = "C:/Users/MyDocuments/NewImages"
+            })
+        };
     }
 }
