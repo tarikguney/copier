@@ -26,6 +26,9 @@ namespace Copier.Client
         [Option('v', "verbose", Default = false, Required = false,
             HelpText = "If passed true, more information will be outputted to the console.")]
         public bool Verbose { get; set; }
+        
+        [Option('d', "debug", Default = false, Required = false, HelpText = "Shows debug information.")]
+        public bool Debug { get; set; }
 
         [Usage]
         public static IEnumerable<Example> Examples => new List<Example>()
