@@ -15,9 +15,12 @@ namespace Copier.Client
         [Option('d', "destinationDirectoryPath",Required = true, HelpText = "Destination directory path")]
         public string DestinationDirectoryPath { get; set; }
         
-        [Option('o',"overrideTargetFiles", Default = false, Required = false, HelpText = "If passed true, copier will override existing files at the target location.")]
-        public bool OverrideTargetFiles { get; set; }
-            
+        [Option('o',"overwriteTargetFiles", Default = false, Required = false, HelpText = "If passed true, copier will overwrite existing files at the target location.")]
+        public bool OverwriteTargetFile { get; set; }
+        
+        [Option('v', "verbose", Default=false, Required = false, HelpText = "If passed true, more information will be outputted to the console.")]
+        public bool Verbose { get; set; }  
+        
         [Usage]
         public static IEnumerable<Example> Examples => new List<Example>() {
             new Example("Starts the copier", new UnParserSettings() { PreferShortName = true },
