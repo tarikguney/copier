@@ -24,54 +24,10 @@ namespace Copier.Client
                 ? Directory.GetCurrentDirectory()
                 : options.SourceDirectoryPath;
 
-            WatchFile(options);
-        }
-
-        private static void WatchFile(CommandOptions options)
-        {
-            var watcher = new FileSystemWatcher
-            {
-                Path = options.SourceDirectoryPath,
-                NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.FileName,
-                Filter = options.FileGlobPattern,
-            };
-
-            watcher.Changed += (sender, args) =>
-            {
-                if (args.ChangeType != WatcherChangeTypes.Changed) return;
-                
-                if (options.Verbose)
-                {
-                    Console.WriteLine($"{args.Name} file has changed.");
-                }
-
-                CopyFile(options.SourceDirectoryPath, args.Name, options.DestinationDirectoryPath,
-                    options.OverwriteTargetFile);
-            };
-
-            watcher.Renamed += (sender, args) =>
-            {
-                if (options.Verbose)
-                {
-                    Console.WriteLine($"{args.OldName} has been renamed to {args.Name}.");
-                }
-
-                CopyFile(options.SourceDirectoryPath, args.Name, options.DestinationDirectoryPath,
-                    options.OverwriteTargetFile);
-            };
-
-            watcher.EnableRaisingEvents = true;
-        }
-
-        private static void CopyFile(string sourceDirectoryPath, string fileName,
-            string targetDirectoryPath, bool overwriteTargetFile)
-        {
-            var absoluteSourceFilePath = Path.Combine(sourceDirectoryPath, fileName);
-            var absoluteTargetFilePath = Path.Combine(targetDirectoryPath, fileName);
-
-            if(File.Exists(absoluteTargetFilePath) && !overwriteTargetFile) return;
-            
-            File.Copy(absoluteSourceFilePath, absoluteTargetFilePath, overwriteTargetFile);
-        }
+            IFileCopier copier = new FileCopier();
+            ILogger logger = new ConsoleLogger();
+            IFileWatcher fileWatcher = new FileWatcher(copier, logger);
+            fileWatcher.Watch(options);
+        }      
     }
 }
