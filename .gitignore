@@ -3,3 +3,4 @@
 Copier.sln.DotSettings.user
 /Client/bin/*
 CopierPluginBase/obj/*
+CopierPluginBase/bin*

@@ -6,8 +6,6 @@ namespace Copier.Client
 {
     class Program
     {
-        public static event Action ApplicationStarted = delegate { };
-
         static void Main(string[] args)
         {
             Parser.Default.ParseArguments<CommandOptions>(args)
@@ -20,17 +18,20 @@ namespace Copier.Client
 
         private static void StartWatching(CommandOptions options)
         {
-            ApplicationStarted();
-
             Console.WriteLine("Watching has started...");
 
             options.SourceDirectoryPath = string.IsNullOrWhiteSpace(options.SourceDirectoryPath)
                 ? Directory.GetCurrentDirectory()
                 : options.SourceDirectoryPath;
             
+            PluginLoader loader = new PluginLoader();
+            
             ILogger logger = new ConsoleLogger();
             IFileCopier copier = new FileCopier(logger);
             IFileWatcher fileWatcher = new FileWatcher(copier, logger);
+            
+            loader.Subscribe((IPreCopyEventBroadcaster) copier, (IPostCopyEventBroadcaster) copier);
+            
             fileWatcher.Watch(options);
         }
     }

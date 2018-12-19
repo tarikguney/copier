@@ -1,19 +1,20 @@
 using System;
 using System.IO;
+using CopierPluginBase;
 
 namespace Copier.Client
 {
-    class FileCopier : IFileCopier
+    class FileCopier : IFileCopier, IPreCopyEventBroadcaster, IPostCopyEventBroadcaster
     {
+        public event Action<string> PreCopyEvent = delegate {  };
+        public event Action<string> PostCopy = delegate {  };
+        
         private readonly ILogger _logger;
 
         public FileCopier(ILogger logger)
         {
             _logger = logger;
         }
-
-        public Action<string> PreCopy = delegate { };
-        public Action<string> PostCopy = delegate { };
 
         public void CopyFile(CommandOptions options, string fileName)
         {
@@ -26,9 +27,19 @@ namespace Copier.Client
                 return;
             }
 
-            PreCopy(absoluteSourceFilePath);
+            PreCopyEvent(absoluteSourceFilePath);
             File.Copy(absoluteSourceFilePath, absoluteTargetFilePath, options.OverwriteTargetFile);
             PostCopy(absoluteSourceFilePath);
         }
+    }
+
+    public interface IPostCopyEventBroadcaster
+    {
+        event Action<string> PostCopy;
+    }
+
+    public interface IPreCopyEventBroadcaster
+    {
+       event Action<string> PreCopyEvent;
     }
 }
