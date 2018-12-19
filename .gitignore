@@ -2,3 +2,4 @@
 .idea/*
 Copier.sln.DotSettings.user
 /Client/bin/*
+CopierPluginBase/obj/*
