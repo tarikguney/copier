@@ -24,9 +24,9 @@ namespace Copier.Client
                 ? Directory.GetCurrentDirectory()
                 : options.SourceDirectoryPath;
             
-            PluginLoader loader = new PluginLoader();
-            
             ILogger logger = new ConsoleLogger();
+            IPluginLoader loader = new PluginLoader(logger, options.Debug);
+            
             IFileCopier copier = new FileCopier(logger);
             IFileWatcher fileWatcher = new FileWatcher(copier, logger);
             
