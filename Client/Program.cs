@@ -22,7 +22,11 @@ namespace Copier.Client
         private static void StartWatching(CommandOptions options)
         {
             Console.WriteLine("Watching has started...");
-            WatchFile(options.FileGlobPattern, options.SourceDirectoryPath);
+            var sourceDirectoryPath = string.IsNullOrWhiteSpace(options.SourceDirectoryPath)
+                ? Directory.GetCurrentDirectory() 
+                : options.SourceDirectoryPath;
+            
+            WatchFile(options.FileGlobPattern, sourceDirectoryPath);
         }
 
         private static void WatchFile(string filePattern, string sourceDirectoryPath)
