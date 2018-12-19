@@ -31,8 +31,7 @@ namespace Copier.Client
                     _logger.Write($"{args.Name} file has changed.");
                 }
 
-                _fileCopier.CopyFile(options.SourceDirectoryPath, args.Name, options.DestinationDirectoryPath,
-                    options.OverwriteTargetFile);
+                _fileCopier.CopyFile(options, args.Name);
             };
 
             watcher.Renamed += (sender, args) =>
@@ -42,8 +41,7 @@ namespace Copier.Client
                     _logger.Write($"{args.OldName} has been renamed to {args.Name}.");
                 }
 
-                _fileCopier.CopyFile(options.SourceDirectoryPath, args.Name, options.DestinationDirectoryPath,
-                    options.OverwriteTargetFile);
+                _fileCopier.CopyFile(options, args.Name);
             };
 
             watcher.EnableRaisingEvents = true;
