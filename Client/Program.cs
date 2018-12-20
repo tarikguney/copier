@@ -18,13 +18,14 @@ namespace Copier.Client
 
         private static void StartWatching(CommandOptions options)
         {
-            Console.WriteLine("Watching has started...");
+            ILogger logger = new ConsoleLogger();
+            
+           logger.LogInfo("Watching has started...");
 
             options.SourceDirectoryPath = string.IsNullOrWhiteSpace(options.SourceDirectoryPath)
                 ? Directory.GetCurrentDirectory()
                 : options.SourceDirectoryPath;
             
-            ILogger logger = new ConsoleLogger();
             IPluginLoader loader = new PluginLoader(logger, options.Debug);
             
             IFileCopier copier = new FileCopier(logger);

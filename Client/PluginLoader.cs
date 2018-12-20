@@ -38,6 +38,15 @@ namespace Copier.Client
             pluginDirectory = Path.Combine(Directory.GetCurrentDirectory(), "plugins");
 #endif
 
+            if (!Directory.Exists(pluginDirectory))
+            {
+                if (ShowDebugMessages)
+                {
+                    _debugLogger.LogWarning("Cannot find plugins folder.");
+                }
+                return;
+            }
+            
             var assemblyFiles = Directory.GetFiles(pluginDirectory, "*.dll");
 
             foreach (var assemblyName in assemblyFiles)
@@ -46,7 +55,7 @@ namespace Copier.Client
 
                 if (ShowDebugMessages)
                 {
-                    _debugLogger.Write($"Loaded {assemblyName}");
+                    _debugLogger.LogDebug($"Loaded {assemblyName}");
                 }
 
                 var existingTypes = pluginAssembly.GetTypes();
@@ -64,15 +73,14 @@ namespace Copier.Client
                 // If enabled, logging debug messages for the found types in the iterated assembly.
                 if (ShowDebugMessages)
                 {
-                    _debugLogger.Write($"Found the following PostCopy types from plugin {assemblyName}:");
-                    _debugLogger.Write(string.Join("\n", postCopyListenerTypes.Select(a => a.Name).ToArray()));
+                    _debugLogger.LogDebug($"Found the following PostCopy types from plugin {assemblyName}:");
+                    _debugLogger.LogDebug(string.Join("\n", postCopyListenerTypes.Select(a => a.Name).ToArray()));
 
-                    _debugLogger.Write($"Found the following PreCopy types from plugin {assemblyName}:");
-
+                    _debugLogger.LogDebug($"Found the following PreCopy types from plugin {assemblyName}:");
                     // Used LINQ for fun.
                     var preCopyTypeNames = (from a in preCopyListenerTypes
                         select a.Name).ToArray();
-                    _debugLogger.Write(string.Join("\n", preCopyTypeNames));
+                    _debugLogger.LogDebug(string.Join("\n", preCopyTypeNames));
                 }
             }
         }

@@ -23,7 +23,7 @@ namespace Copier.Client
 
             if (File.Exists(absoluteTargetFilePath) && !options.OverwriteTargetFile)
             {
-                _logger.Write($"{fileName} exists. Skipped because OverwriteTargetFile is set to false.");
+                _logger.LogInfo($"{fileName} exists. Skipped the copy operation because OverwriteTargetFile is set to false.");
                 return;
             }
 
