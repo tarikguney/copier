@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CopierPluginBase", "CopierPluginBase\CopierPluginBase.csproj", "{176D1208-81FB-4F0B-9E81-52D2ACE3B705}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SamplePlugin", "SamplePlugin\SamplePlugin.csproj", "{F97F0A1D-2A3B-4EE4-9639-EEA9C62BA9BB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{176D1208-81FB-4F0B-9E81-52D2ACE3B705}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{176D1208-81FB-4F0B-9E81-52D2ACE3B705}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{176D1208-81FB-4F0B-9E81-52D2ACE3B705}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F97F0A1D-2A3B-4EE4-9639-EEA9C62BA9BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F97F0A1D-2A3B-4EE4-9639-EEA9C62BA9BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F97F0A1D-2A3B-4EE4-9639-EEA9C62BA9BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F97F0A1D-2A3B-4EE4-9639-EEA9C62BA9BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
