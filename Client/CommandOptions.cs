@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using CommandLine;
 using CommandLine.Text;
 
@@ -26,10 +27,13 @@ namespace Copier.Client
         [Option('v', "verbose", Default = false, Required = false,
             HelpText = "If passed true, more information will be outputted to the console.")]
         public bool Verbose { get; set; }
-        
+
         [Option('e', "debug", Default = false, Required = false, HelpText = "Shows debug information.")]
         public bool Debug { get; set; }
 
+        [Option('t', "delay", Default = 0, Required = false, HelpText = "Delays copy operation for a given time in seconds.")]
+        public int Delay { get; set; }
+        
         [Usage]
         public static IEnumerable<Example> Examples => new List<Example>()
         {
@@ -57,7 +61,7 @@ namespace Copier.Client
                     FileGlobPattern = "*.jpg",
                     DestinationDirectoryPath = "C:/Users/MyDocuments/NewImages",
                     OverwriteTargetFile = true,
-                    Verbose =  true
+                    Verbose = true
                 })
         };
     }

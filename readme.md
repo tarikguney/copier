@@ -11,3 +11,4 @@ Allows you to specify folders/files to track and copies them to a target locatio
 # Ideas
 
 1. Allow optional arguments by accepting them with argument flags. For instance, base path can be skipped to use the current directory as the base path. -- Still thinking about this...
+2. Implement queued file copier as separate class.
