@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Transactions;
 using CopierPluginBase;
 
 namespace Copier.Client
@@ -13,18 +14,30 @@ namespace Copier.Client
         private readonly List<Type> _preCopyListeners = new List<Type>();
         private readonly List<Type> _postCopyListeners = new List<Type>();
 
-        private bool ShowDebugMessages { get; }
+        private bool ShowDebugMessages { get; set; }
 
-
-        public PluginLoader(ILogger debugLogger, bool showDebugMessages = false) : this()
+        public PluginLoader(ILogger debugLogger, bool showDebugMessages = false)
         {
             _debugLogger = debugLogger;
             ShowDebugMessages = showDebugMessages && debugLogger != null;
+            Initialize();
         }
 
         public PluginLoader()
         {
-            var pluginDirectory = Path.Combine(Directory.GetCurrentDirectory(), "plugins");
+            Initialize();
+        }
+
+        private void Initialize()
+        {
+            var pluginDirectory = string.Empty;
+
+#if DEBUG
+            pluginDirectory = Path.Combine(Directory.GetCurrentDirectory(), "bin\\Debug\\netcoreapp2.1", "plugins");
+#else
+            pluginDirectory = Path.Combine(Directory.GetCurrentDirectory(), "plugins");
+#endif
+
             var assemblyFiles = Directory.GetFiles(pluginDirectory, "*.dll");
 
             foreach (var assemblyName in assemblyFiles)
@@ -38,12 +51,14 @@ namespace Copier.Client
 
                 var existingTypes = pluginAssembly.GetTypes();
 
+                bool TypePredicate(Type child, Type parent) => child.IsPublic && !child.IsAbstract && child.IsClass && parent.IsAssignableFrom(child);
+
                 var postCopyListenerTypes =
-                    existingTypes.Where(a => a.IsClass && a.IsSubclassOf(typeof(IPostCopyEventListener))).ToList();
+                    existingTypes.Where(a => TypePredicate(a, typeof(IPostCopyEventListener))).ToList();
                 _postCopyListeners.AddRange(postCopyListenerTypes);
 
                 var preCopyListenerTypes =
-                    existingTypes.Where(a => a.IsClass && a.IsSubclassOf(typeof(IPreCopyEventListener))).ToList();
+                    existingTypes.Where(a => TypePredicate(a,typeof(IPreCopyEventListener))).ToList();
                 _preCopyListeners.AddRange(preCopyListenerTypes);
 
                 // If enabled, logging debug messages for the found types in the iterated assembly.
