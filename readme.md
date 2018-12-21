@@ -49,3 +49,5 @@ You can go to release page (https://github.com/tarikguney/copier/releases) and f
 ## How will you feel when using this tool?
 
 ![Laughing](https://media.giphy.com/media/l1IYbqyLSloejiLok/giphy.gif)
+
+Developed by @tarikguney <3 love...
