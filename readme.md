@@ -52,6 +52,11 @@ If you speak in Turkish, you can watch the entire process of this application be
 
 https://www.youtube.com/watch?v=aW8W2gze8JE&list=PL_Z0TaFYSF3LLSRobjiV0y-I18kjRm7cx
 
+## Roadmap
+
+1. Accepts all of the arguments from a config file. An sample command would look like the following: `dotnet Copier.dll -f Config.txt`. `-f` is where the path of the config file.
+
+
 ## How will you feel when using this tool?
 
 ![Laughing](https://media.giphy.com/media/l1IYbqyLSloejiLok/giphy.gif)
