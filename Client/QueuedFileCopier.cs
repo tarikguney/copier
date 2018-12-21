@@ -1,49 +1,78 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Timers;
 
 namespace Copier.Client
 {
-    public class QueuedFileCopier: IFileCopier
+    public class QueuedFileCopier : IFileCopier, IPreCopyEventBroadcaster, IPostCopyEventBroadcaster
     {
+        public event Action<string> PreCopyEvent = delegate {};
+        public event Action<string> PostCopyEvent = delegate {};
+        
         private readonly IFileCopier _fileCopier;
         private readonly ILogger _logger;
-        private CommandOptions _commandOptions;
-        
-        private readonly HashSet<string> _fileNameQueue = new HashSet<string>();
-        private Timer _copyTimer;
+        private readonly CommandOptions _options;
 
-        public QueuedFileCopier(IFileCopier fileCopier, ILogger logger)
+        private readonly HashSet<string> _fileNameQueue = new HashSet<string>();
+        private Task _copyTask;
+
+        public QueuedFileCopier(IFileCopier fileCopier, ILogger logger, CommandOptions options)
         {
             _fileCopier = fileCopier;
             _logger = logger;
+            _options = options;
+
+            if (_options.Debug)
+            {
+                logger.LogInfo("Delay option has been specified. QueuedFileCopier is chosen as the copier strategy.");
+            }
         }
 
-        public void CopyFile(CommandOptions options, string fileName)
+        public void CopyFile(string fileName)
         {
-            if (_copyTimer == null)
+            if (_copyTask == null)
             {
-                _commandOptions = options;
-                _copyTimer = new Timer();
-                _copyTimer.Elapsed += TimerOnElapsed;
+                _copyTask = Task.Run(async () =>
+                {
+                    await Task.Delay(TimeSpan.FromMilliseconds(_options.Delay));
+                    if (_options.Verbose || _options.Debug)
+                    {
+                        _logger.LogInfo($"{_options.Delay} milliseconds have passed. The copy operation has started...");
+                    }
+
+                    PreCopyEvent("");
+
+                    foreach (var item in _fileNameQueue)
+                    {
+                        _fileCopier.CopyFile(item);
+                    }
+
+                    PostCopyEvent("");
+
+                    _copyTask = null;
+
+                    if (_options.Verbose || _options.Debug)
+                    {
+                        _logger.LogInfo($"The copy operation has finished...");
+                        _logger.LogInfo("The file queue has been emptied.");
+                    }
+                });
             }
 
             if (!_fileNameQueue.Contains(fileName))
             {
+                if (_options.Verbose || _options.Debug)
+                {
+                    _logger.LogInfo(
+                        $"{fileName} has been added to the file queue and will be copied over in {_options.Delay} milliseconds.");
+                }
+
                 _fileNameQueue.Add(fileName);
             }
-        }
-
-        private void TimerOnElapsed(object sender, ElapsedEventArgs e)
-        {
-            foreach (var fileName in _fileNameQueue)
+            else if (_options.Debug)
             {
-                _fileCopier.CopyFile(_commandOptions, fileName);
+                _logger.LogInfo($"{fileName} exists in the file queue, thereby skipped.");
             }
-            
-            _fileNameQueue.Clear();
         }
     }
 }

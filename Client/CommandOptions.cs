@@ -31,7 +31,7 @@ namespace Copier.Client
         [Option('e', "debug", Default = false, Required = false, HelpText = "Shows debug information.")]
         public bool Debug { get; set; }
 
-        [Option('t', "delay", Default = 0, Required = false, HelpText = "Delays copy operation for a given time in seconds.")]
+        [Option('t', "delay", Default = 0, Required = false, HelpText = "Delays copy operation for a given time in milliseconds.")]
         public int Delay { get; set; }
         
         [Usage]

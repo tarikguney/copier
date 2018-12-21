@@ -31,7 +31,7 @@ namespace Copier.Client
                     _logger.LogInfo($"{args.Name} file has changed.");
                 }
 
-                _fileCopier.CopyFile(options, args.Name);
+                _fileCopier.CopyFile(args.Name);
             };
 
             watcher.Renamed += (sender, args) =>
@@ -41,7 +41,7 @@ namespace Copier.Client
                     _logger.LogInfo($"{args.OldName} has been renamed to {args.Name}.");
                 }
 
-                _fileCopier.CopyFile(options, args.Name);
+                _fileCopier.CopyFile(args.Name);
             };
 
             watcher.EnableRaisingEvents = true;

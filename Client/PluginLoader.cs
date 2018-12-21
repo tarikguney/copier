@@ -100,7 +100,7 @@ namespace Copier.Client
             _postCopyListeners.ForEach(a =>
             {
                 var listenerObject = (IPostCopyEventListener) Activator.CreateInstance(a);
-                post.PostCopy += listenerObject.OnPostCopy;
+                post.PostCopyEvent += listenerObject.OnPostCopy;
             });
         }
     }

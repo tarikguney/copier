@@ -27,10 +27,15 @@ namespace Copier.Client
                 : options.SourceDirectoryPath;
             
             IPluginLoader loader = new PluginLoader(logger, options.Debug);
-            IFileCopier copier = options.Delay > 0 
-                ? (IFileCopier) new QueuedFileCopier(logger) 
-                : new FileCopier(logger);
             
+            var fileCopier = new FileCopier(logger, options);
+            IFileCopier copier = fileCopier;
+            
+            if (options.Delay > 0)
+            {
+                copier = new QueuedFileCopier(fileCopier, logger, options);
+            }
+
             IFileWatcher fileWatcher = new FileWatcher(copier, logger);
             
             loader.Subscribe((IPreCopyEventBroadcaster) copier, (IPostCopyEventBroadcaster) copier);
