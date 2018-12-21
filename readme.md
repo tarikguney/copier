@@ -1,7 +1,7 @@
 # Copier App
 
 ## What is it?
-Allows you to specify folders/files to track and copies them to a target location. It continuously watches changes on the specified files in the background and carry out copy operation to the destination location.
+A cross-platform (works on Windows, Linux, and Mac) and open-source file watcher and copier application. It allows you to specify folders/files to track and copies them to a target location. It continuously watches changes on the specified files in the background and copies them to the destination directory.
 
 The application has been developed with .NET Core technology and depends on the existence of .NET Core framework on the target machine where it is being used. You can simply download the framework from http://dot.net.
 
