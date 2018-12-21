@@ -5,11 +5,11 @@ A cross-platform (works on Windows, Linux, and Mac) and open-source file watcher
 
 The application has been developed with .NET Core technology and depends on the existence of .NET Core framework on the target machine where it is being used. You can simply download the framework from http://dot.net.
 
-Note: The future release will be built without .net core dependent.
+Note: The future release will be built without .net core dependency.
 
 ## How to use?
 
-Currently, it is a command-line application, therefore, you need to be passing a few options to be able to tell what to copy, the source directory, and the destination directory.
+Currently, it is a command-line application; therefore, you need to be passing a few options to be able to tell what to copy, the source directory, and the destination directory.
 
 The simple way to find all the available options is to run the tool with `--help` flag such as `dotnet Copier.dll --help`.
 
@@ -39,7 +39,7 @@ Copier app supports plugin integration. You can easily develop your own plugins 
 
 ### Having issues?
 
-Copier app has been developed with in-depth logging mechanism. You can see all the steps it takes when running with the debug `-e` flag. If you would like to see more than regular messages but less than debug messages, use `-v` verbose flag. If you still have issues, create a new issue at https://github.com/tarikguney/copier/issues or please send a pull request with the fix. I'd love to see other people's contributions.
+Copier app has been developed with an in-depth logging mechanism. You can see all the steps it takes when running it with the debug `-e` flag. If you would like to see more than regular messages but less than debug messages, use `-v` verbose flag. If you still have issues, create a new issue at https://github.com/tarikguney/copier/issues or please send a pull request with the fix. I'd love to see other people's contributions.
 
 
 ## How to download?
