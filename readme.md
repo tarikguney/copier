@@ -46,6 +46,12 @@ Copier app has been developed with in-depth logging mechanism. You can see all t
 
 You can go to release page (https://github.com/tarikguney/copier/releases) and find the most recent version to download. It is a zip file that you need to unzip on your machine. 
 
+## Watch how this application was developed!
+
+If you speak in Turkish, you can watch the entire process of this application being developed here:
+
+https://www.youtube.com/watch?v=aW8W2gze8JE&list=PL_Z0TaFYSF3LLSRobjiV0y-I18kjRm7cx
+
 ## How will you feel when using this tool?
 
 ![Laughing](https://media.giphy.com/media/l1IYbqyLSloejiLok/giphy.gif)
