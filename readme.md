@@ -42,8 +42,6 @@ Copier app supports plugin integration. You can easily develop your own plugins 
 Copier app has been developed with in-depth logging mechanism. You can see all the steps it takes when running with the debug `-e` flag. If you would like to see more than regular messages but less than debug messages, use `-v` verbose flag. If you still have issues, create a new issue at https://github.com/tarikguney/copier/issues or please send a pull request with the fix. I'd love to see other people's contributions.
 
 
-![HavingIssues](https://media.giphy.com/media/13HgwGsXF0aiGY/giphy.gif)
-
 ## How to download?
 
 You can go to release page (https://github.com/tarikguney/copier/releases) and find the most recent version to download. It is a zip file that you need to unzip on your machine. 
