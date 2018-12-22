@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
 using CommandLine;
 
 namespace Copier.Client
@@ -9,28 +10,35 @@ namespace Copier.Client
     {
         static void Main(string[] args)
         {
-            var result = Parser.Default.ParseArguments<CommandOptions, ConfigFileCommandOptions>(args)
-                .MapResult(
-                    (CommandOptions o) => StartWatchingAndReturnExitCode(o),
-                    (ConfigFileCommandOptions co) => StartWatchingWithConfigurationFile(co),
-                    err => 1);
+            Parser.Default.ParseArguments<CommandOptions, ConfigFileCommandOptions>(args)
+                .WithParsed<CommandOptions>(StartWatching)
+                .WithParsed<ConfigFileCommandOptions>(StartWatchingWithConfigurationFile)
+                .WithNotParsed(a => { Environment.Exit(1); });
             
-//                .WithParsed<CommandOptions>(StartWatching)
-//                .WithParsed<ConfigFileCommandOptions>(StartWatchingWithConfigurationFile)
-//                .WithNotParsed(a => { Environment.Exit(1); });
-
             Console.WriteLine("Please press any key to exit.");
             Console.ReadLine();
         }
 
-        private static int StartWatchingWithConfigurationFile(ConfigFileCommandOptions options)
+        private static void StartWatchingWithConfigurationFile(ConfigFileCommandOptions options)
         {
             ILogger logger = new ConsoleLogger();
             
             if (File.Exists(options.ConfigFilePath))
             {
                 var configContent = File.ReadAllLines(options.ConfigFilePath);
-                Parser.Default.ParseArguments<CommandOptions>(configContent)
+                var trimmedConfig = configContent.SelectMany(a =>
+                {
+                    var result = Regex.Match(a, "\"(.*?)\"");
+                    if (result.Success)
+                    {
+                        var option = a.Replace(result.Value, "");
+                        return new[] {option.Trim(), result.Value.Trim().Replace("\"","")};
+                    }
+                    return new [] {a.Trim()};
+
+                }).ToList();
+                
+                Parser.Default.ParseArguments<CommandOptions>(trimmedConfig)
                     .WithParsed(StartWatching)
                     .WithNotParsed(a => { Environment.Exit(1); });
             }
@@ -38,16 +46,8 @@ namespace Copier.Client
             {
                 logger.LogError($"Cannot find {options.ConfigFilePath}! Please make sure the file exists in the given location.");
             }
-
-            return 0;
         }
-        
-        private static int StartWatchingAndReturnExitCode(CommandOptions options)
-        {
-            StartWatching(options);
-            return 0;
-        }
-
+       
         private static void StartWatching(CommandOptions options)
         {
             ILogger logger = new ConsoleLogger();

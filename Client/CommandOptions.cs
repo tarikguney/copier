@@ -5,6 +5,7 @@ using CommandLine.Text;
 
 namespace Copier.Client
 {
+    [Verb("watch", HelpText = "If you want to pass options manually, use this command to begin watch and copy operation.")]
     public class CommandOptions
     {
         [Option('s', "sourceDirectoryPath",
