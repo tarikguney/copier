@@ -1,5 +1,8 @@
 # Copier App
 
+### Note
+*If you'd like to store all the options in a file and have copier app read the options from that file, check out the branch `configfile-experiment`.* The further development will continue from that branch until it is fully merged into `master` branch. For more information, take a look at the `readme.md` file from `configfile-experiment` branch.
+
 ## What is it?
 A cross-platform (works on Windows, Linux, and Mac) and open-source file watcher and copier application. It allows you to specify folders/files to track and copies them to a target location. It continuously watches changes on the specified files in the background and copies them to the destination directory.
 
