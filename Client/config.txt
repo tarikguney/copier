@@ -1,0 +1,4 @@
+-s "C:\Users\Tarik Guney\Desktop\test-files" 
+-f "*.txt" -d "C:\Users\Tarik Guney\Desktop\test-files\new-files" 
+-v 
+-e true
