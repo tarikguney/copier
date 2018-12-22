@@ -39,7 +39,7 @@ A simple config file looks like the following:
 -o
 ```
 
-You specify each option with their arguments (if applied) in a new line. Do not combine multiple options in the same line.
+You specify each option with their arguments (if applied) in a new line. Do not combine multiple options in the same line. Make sure you wrap path text with double quotation marks as shown in the sample text above.
 
 Type `dotnet Copier.dll help watch` for all the available options you can use in the config file.
 
