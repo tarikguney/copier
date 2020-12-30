@@ -75,6 +75,8 @@ https://www.youtube.com/watch?v=aW8W2gze8JE&list=PL_Z0TaFYSF3LLSRobjiV0y-I18kjRm
 ## Roadmap
 
 1. Accepts all of the arguments from a config file. An sample command would look like the following: `dotnet Copier.dll -f Config.txt`. `-f` is the path of the config file.
+2. Make the executable self-contained, meaning that it won't require .NET Core runtime to be installed on the target machine.
+3. Bump the .NET Core framework version to the latest .NET 5 framework.
 
 ### Note
 *If you'd like to store all the options in a file and have copier app read the options from that file, check out the branch `configfile-experiment`.* The further development will continue from that branch until it is fully merged into `master` branch. For more information, take a look at the `readme.md` file from `configfile-experiment` branch.
