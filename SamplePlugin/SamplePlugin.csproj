@@ -1,11 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netcoreapp2.1</TargetFramework>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\CopierPluginBase\CopierPluginBase.csproj" />
+        <ProjectReference Include="..\CopierPluginBase\CopierPluginBase.csproj"/>
     </ItemGroup>
 
 </Project>

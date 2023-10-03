@@ -1,13 +1,11 @@
-﻿using System;
-using CopierPluginBase;
+﻿using CopierPluginBase;
 
-namespace SamplePlugin
+namespace SamplePlugin;
+
+public class SamplePreCopyEventListener: IPreCopyEventListener
 {
-    public class SamplePreCopyEventListener: IPreCopyEventListener
+    public void OnPreCopy(string filePath)
     {
-        public void OnPreCopy(string filePath)
-        {
-            Console.WriteLine("SamplePreCopyEventListener is executed.");
-        }
+        Console.WriteLine("SamplePreCopyEventListener is executed.");
     }
 }

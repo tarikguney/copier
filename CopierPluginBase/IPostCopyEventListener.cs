@@ -1,7 +1,6 @@
-namespace CopierPluginBase
+namespace CopierPluginBase;
+
+public interface IPostCopyEventListener
 {
-    public interface IPostCopyEventListener
-    {
-        void OnPostCopy(string filePath);
-    }
+    void OnPostCopy(string filePath);
 }

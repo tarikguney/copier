@@ -1,7 +1,6 @@
-namespace CopierPluginBase
+namespace CopierPluginBase;
+
+public interface IPreCopyEventListener
 {
-    public interface IPreCopyEventListener
-    {
-        void OnPreCopy(string filePath);
-    }
+    void OnPreCopy(string filePath);
 }
