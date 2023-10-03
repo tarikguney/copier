@@ -5,16 +5,16 @@ namespace Copier.Client;
 
 public class PluginLoader : IPluginLoader
 {
-    private readonly ILogger _debugLogger;
-    private readonly List<Type> _preCopyListeners = new List<Type>();
-    private readonly List<Type> _postCopyListeners = new List<Type>();
+    private readonly ILogger? _debugLogger;
+    private readonly List<Type> _preCopyListeners = new();
+    private readonly List<Type> _postCopyListeners = new();
 
-    private bool ShowDebugMessages { get; set; }
+    private bool ShowDebugMessages { get; }
 
     public PluginLoader(ILogger debugLogger, bool showDebugMessages = false)
     {
         _debugLogger = debugLogger;
-        ShowDebugMessages = showDebugMessages && debugLogger != null;
+        ShowDebugMessages = showDebugMessages;
         Initialize();
     }
 
@@ -40,7 +40,7 @@ public class PluginLoader : IPluginLoader
         {
             if (ShowDebugMessages)
             {
-                _debugLogger.LogWarning("Cannot find plugins folder.");
+                _debugLogger?.LogWarning("Cannot find plugins folder.");
             }
 
             return;
@@ -54,7 +54,7 @@ public class PluginLoader : IPluginLoader
 
             if (ShowDebugMessages)
             {
-                _debugLogger.LogDebug($"Loaded {assemblyName}");
+                _debugLogger?.LogDebug($"Loaded {assemblyName}");
             }
 
             var existingTypes = pluginAssembly.GetTypes();
@@ -73,14 +73,14 @@ public class PluginLoader : IPluginLoader
             // If enabled, logging debug messages for the found types in the iterated assembly.
             if (ShowDebugMessages)
             {
-                _debugLogger.LogDebug($"Found the following PostCopy types from plugin {assemblyName}:");
-                _debugLogger.LogDebug(string.Join("\n", postCopyListenerTypes.Select(a => a.Name).ToArray()));
+                _debugLogger?.LogDebug($"Found the following PostCopy types from plugin {assemblyName}:");
+                _debugLogger?.LogDebug(string.Join("\n", postCopyListenerTypes.Select(a => a.Name).ToArray()));
 
-                _debugLogger.LogDebug($"Found the following PreCopy types from plugin {assemblyName}:");
+                _debugLogger?.LogDebug($"Found the following PreCopy types from plugin {assemblyName}:");
                 // Used LINQ for fun.
                 var preCopyTypeNames = (from a in preCopyListenerTypes
                     select a.Name).ToArray();
-                _debugLogger.LogDebug(string.Join("\n", preCopyTypeNames));
+                _debugLogger?.LogDebug(string.Join("\n", preCopyTypeNames));
             }
         }
     }
@@ -89,13 +89,15 @@ public class PluginLoader : IPluginLoader
     {
         _preCopyListeners.ForEach(a =>
         {
-            var listenerObject = (IPreCopyEventListener) Activator.CreateInstance(a);
+            if (Activator.CreateInstance(a) is not IPreCopyEventListener listenerObject) return;
+            
             pre.PreCopyEvent += listenerObject.OnPreCopy;
         });
 
         _postCopyListeners.ForEach(a =>
         {
-            var listenerObject = (IPostCopyEventListener) Activator.CreateInstance(a);
+            if (Activator.CreateInstance(a) is not IPostCopyEventListener listenerObject) return;
+            
             post.PostCopyEvent += listenerObject.OnPostCopy;
         });
     }

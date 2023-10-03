@@ -2,13 +2,13 @@
 
 namespace Copier.Client;
 
-class Program
+internal static class Program
 {
-    static void Main(string[] args)
+    public static void Main(string[] args)
     {
         Parser.Default.ParseArguments<CommandOptions>(args)
             .WithParsed(StartWatching)
-            .WithNotParsed(a => { Environment.Exit(1); });
+            .WithNotParsed(_ => { Environment.Exit(1); });
 
         Console.WriteLine("Please press any key to exit.");
         Console.ReadLine();
@@ -19,10 +19,6 @@ class Program
         ILogger logger = new ConsoleLogger();
             
         logger.LogInfo("Watching has started...");
-
-        options.SourceDirectoryPath = string.IsNullOrWhiteSpace(options.SourceDirectoryPath)
-            ? Directory.GetCurrentDirectory()
-            : options.SourceDirectoryPath;
             
         IPluginLoader loader = new PluginLoader(logger, options.Debug);
             

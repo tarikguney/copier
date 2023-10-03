@@ -9,8 +9,8 @@ public class QueuedFileCopier : IFileCopier, IPreCopyEventBroadcaster, IPostCopy
     private readonly ILogger _logger;
     private readonly CommandOptions _options;
 
-    private readonly HashSet<string> _fileNameQueue = new HashSet<string>();
-    private Task _copyTask;
+    private readonly HashSet<string> _fileNameQueue = new();
+    private Task? _copyTask;
 
     public QueuedFileCopier(IFileCopier fileCopier, ILogger logger, CommandOptions options)
     {
@@ -26,9 +26,8 @@ public class QueuedFileCopier : IFileCopier, IPreCopyEventBroadcaster, IPostCopy
 
     public void CopyFile(string fileName)
     {
-        if (_copyTask == null)
-        {
-            _copyTask = Task.Run(async () =>
+        _copyTask ??= Task.Run(
+            async () =>
             {
                 await Task.Delay(TimeSpan.FromMilliseconds(_options.Delay));
                 if (_options.Verbose || _options.Debug)
@@ -53,7 +52,6 @@ public class QueuedFileCopier : IFileCopier, IPreCopyEventBroadcaster, IPostCopy
                     _logger.LogInfo("The file queue has been emptied.");
                 }
             });
-        }
 
         if (!_fileNameQueue.Contains(fileName))
         {

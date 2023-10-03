@@ -1,6 +1,6 @@
 namespace Copier.Client;
 
-class FileCopier : IFileCopier, IPreCopyEventBroadcaster, IPostCopyEventBroadcaster
+internal class FileCopier : IFileCopier, IPreCopyEventBroadcaster, IPostCopyEventBroadcaster
 {
     public event Action<string> PreCopyEvent = delegate {  };
     public event Action<string> PostCopyEvent = delegate {  };

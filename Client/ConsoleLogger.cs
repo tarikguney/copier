@@ -1,6 +1,6 @@
 namespace Copier.Client;
 
-class ConsoleLogger : ILogger
+internal class ConsoleLogger : ILogger
 {
     public void LogInfo(string message)
     {

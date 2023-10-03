@@ -1,6 +1,6 @@
 namespace Copier.Client;
 
-class FileWatcher : IFileWatcher
+internal class FileWatcher : IFileWatcher
 {
     private readonly IFileCopier _fileCopier;
     private readonly ILogger _logger;
@@ -20,9 +20,10 @@ class FileWatcher : IFileWatcher
             Filter = options.FileGlobPattern
         };
 
-        watcher.Changed += (sender, args) =>
+        watcher.Changed += (_, args) =>
         {
-            if (args.ChangeType != WatcherChangeTypes.Changed) return;
+            if (args.ChangeType != WatcherChangeTypes.Changed || string.IsNullOrWhiteSpace(args.Name)) 
+                return;
                 
             if (options.Verbose)
             {
@@ -32,8 +33,11 @@ class FileWatcher : IFileWatcher
             _fileCopier.CopyFile(args.Name);
         };
 
-        watcher.Renamed += (sender, args) =>
+        watcher.Renamed += (_, args) =>
         {
+            if (string.IsNullOrWhiteSpace(args.Name))
+                return;
+            
             if (options.Verbose)
             {
                 _logger.LogInfo($"{args.OldName} has been renamed to {args.Name}.");
