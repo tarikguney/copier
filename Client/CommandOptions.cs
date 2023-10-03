@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using CommandLine;
 using CommandLine.Text;
 
@@ -33,6 +32,9 @@ namespace Copier.Client
 
         [Option('t', "delay", Default = 0, Required = false, HelpText = "Delays copy operation for a given time in milliseconds.")]
         public int Delay { get; set; }
+        
+        [Option('r', "recursive", Default = false, Required = false, HelpText = "Search in subdirectories.")]
+        public bool Recursive { get; set; }
         
         [Usage]
         public static IEnumerable<Example> Examples => new List<Example>()

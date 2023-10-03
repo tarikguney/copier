@@ -20,6 +20,7 @@ namespace Copier.Client
                 Path = options.SourceDirectoryPath,
                 NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.FileName,
                 Filter = options.FileGlobPattern,
+                IncludeSubdirectories = options.Recursive
             };
 
             watcher.Changed += (sender, args) =>
