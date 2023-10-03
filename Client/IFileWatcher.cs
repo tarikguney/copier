@@ -1,7 +1,6 @@
-namespace Copier.Client
+namespace Copier.Client;
+
+public interface IFileWatcher
 {
-    public interface IFileWatcher
-    {
-        void Watch(CommandOptions options);
-    }
+    void Watch(CommandOptions options);
 }

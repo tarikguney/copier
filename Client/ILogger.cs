@@ -1,10 +1,9 @@
-namespace Copier.Client
+namespace Copier.Client;
+
+public interface ILogger
 {
-    public interface ILogger
-    {
-        void LogInfo(string message);
-        void LogError(string message);
-        void LogWarning(string message);
-        void LogDebug(string message);
-    }
+    void LogInfo(string message);
+    void LogError(string message);
+    void LogWarning(string message);
+    void LogDebug(string message);
 }

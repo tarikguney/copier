@@ -1,7 +1,6 @@
-namespace Copier.Client
+namespace Copier.Client;
+
+public interface IFileCopier
 {
-    public interface IFileCopier
-    {
-        void CopyFile(string fileName);
-    }
+    void CopyFile(string fileName);
 }

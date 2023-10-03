@@ -1,7 +1,6 @@
-namespace Copier.Client
+namespace Copier.Client;
+
+public interface IPluginLoader
 {
-    public interface IPluginLoader
-    {
-        void Subscribe(IPreCopyEventBroadcaster pre, IPostCopyEventBroadcaster post);
-    }
+    void Subscribe(IPreCopyEventBroadcaster pre, IPostCopyEventBroadcaster post);
 }

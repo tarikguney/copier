@@ -1,13 +1,12 @@
 using System;
 using CopierPluginBase;
 
-namespace SamplePlugin
+namespace SamplePlugin;
+
+public class SamplePostCopyEventListener: IPostCopyEventListener
 {
-    public class SamplePostCopyEventListener: IPostCopyEventListener
+    public void OnPostCopy(string filePath)
     {
-        public void OnPostCopy(string filePath)
-        {
-            Console.WriteLine("SamplePostCopyEventListener is executed.");
-        }
+        Console.WriteLine("SamplePostCopyEventListener is executed.");
     }
 }
