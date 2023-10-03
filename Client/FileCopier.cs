@@ -1,6 +1,3 @@
-using System;
-using System.IO;
-
 namespace Copier.Client;
 
 class FileCopier : IFileCopier, IPreCopyEventBroadcaster, IPostCopyEventBroadcaster

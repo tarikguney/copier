@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
 namespace Copier.Client;
 
 public class QueuedFileCopier : IFileCopier, IPreCopyEventBroadcaster, IPostCopyEventBroadcaster

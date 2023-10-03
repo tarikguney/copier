@@ -5,6 +5,7 @@
         <TargetFramework>net7.0</TargetFramework>
         <AssemblyName>Copier</AssemblyName>
         <RootNamespace>Copier.Client</RootNamespace>
+        <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
 
     <PropertyGroup>

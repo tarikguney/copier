@@ -1,6 +1,3 @@
-using System;
-using System.Drawing;
-
 namespace Copier.Client;
 
 class ConsoleLogger : ILogger

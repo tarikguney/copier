@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using CommandLine;
+﻿using CommandLine;
 
 namespace Copier.Client;
 

@@ -1,5 +1,3 @@
-using System.IO;
-
 namespace Copier.Client;
 
 class FileWatcher : IFileWatcher

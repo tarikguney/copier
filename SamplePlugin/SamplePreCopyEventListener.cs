@@ -1,5 +1,4 @@
-﻿using System;
-using CopierPluginBase;
+﻿using CopierPluginBase;
 
 namespace SamplePlugin;
 
