@@ -30,7 +30,7 @@ namespace Copier.Client
         private static string GetPluginsDirectory()
         {
 #if DEBUG
-            return Path.Combine(Directory.GetCurrentDirectory(), "bin\\Debug\\netcoreapp2.1", "plugins");
+            return Path.Combine(Directory.GetCurrentDirectory(), "bin\\Debug\\net7.0", "plugins");
 #else
             return Path.Combine(Directory.GetCurrentDirectory(), "plugins");
 #endif
